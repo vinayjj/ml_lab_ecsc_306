@@ -1,0 +1,56 @@
+
+
+**SCOPE ASSIGNMENT**
+
+import tensorflow as tf
+with tf.name_scope("MyOperationGroup"):
+    with tf.name_scope("Scope_A"):
+        a = 6
+        c = tf.pow(a,2,name="a2") 
+    with tf.name_scope("Scope_B"):
+        b = 2
+        d = tf.pow(b,2,name="b2")
+    with tf.name_scope("Scope_C"): 
+        g = tf.multiply(tf.multiply(2,a),b,name="2ab")
+    with tf.name_scope("Scope_D"):
+        e = tf.add(c,d,name="add_a2_and_b2")
+    with tf.name_scope("Scope_E"):
+        h = tf.subtract(e,g,name="sub_a2_and_b2_with_2ab")
+
+with tf.Session() as sess:
+    writer = tf.summary.FileWriter("/home/jsr/Desktop/ml/ml_lab_ecsc_306/hw/output1", sess.graph)
+    print(sess.run(h))
+    writer.close()
+
+
+**SCOPE ASSIGNMENT2**
+import tensorflow as tf
+with tf.name_scope("MyOperationGroup"):
+    with tf.name_scope("Scope_A"):
+        a=7
+        aa=tf.pow(a,2)
+    with tf.name_scope("Scope_B"):
+        b=4
+        bb=tf.pow(b,2)
+    with tf.name_scope("Scope_c"):
+        c=4
+        cc=tf.pow(c,2)
+    with tf.name_scope("sum_aa_bb_cc"):
+        add2=tf.add(tf.add(aa,bb,),cc,)#aa+bb+cc
+    with tf.name_scope("Scope_2ab"):
+        mul2=tf.multiply(2,tf.multiply(a,b))#2ab
+    with tf.name_scope("sum_aa_bb_cc_2ab"):        
+        add3=tf.add(add2,mul2,)
+    with tf.name_scope("Scope_2bc"): 
+        mul5=tf.multiply(2,tf.multiply(b,c))#2bc
+    with tf.name_scope("sub_aa_bb_cc_2ab_2bc"): 
+        sub1=tf.subtract(add3,mul5)
+    with tf.name_scope("Scope_2bc"):                 
+        mul7=tf.multiply(2,tf.multiply(a,c))#2ac
+    with tf.name_scope("sub_aa_bb_cc_2ab_2bc_2ac"): 
+        sub2=tf.subtract(sub1,mul7)
+with tf.Session() as sess:
+    writer = tf.summary.FileWriter("/tmp/tboard/output_2", sess.graph)
+    print(sess.run(sub2))
+    writer.close()
+
